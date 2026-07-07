@@ -1,0 +1,90 @@
+---
+const services = [
+  {
+    title: 'Aerial Photography',
+    body: 'High-resolution stills that showcase the full property — lot lines, acreage, rooflines, and the neighborhood context buyers want to see. Every image professionally color-graded and delivered MLS-ready.',
+    points: ['20MP+ high-resolution images', 'MLS-ready sizing and formats', 'Lot line and boundary overlays available'],
+  },
+  {
+    title: 'Cinematic Videography',
+    body: 'Smooth, stabilized 4K aerial video that tells the story of a property. Reveal shots, orbit passes, and neighborhood flyovers edited into a polished film with licensed music.',
+    points: ['4K stabilized footage', 'Professionally edited with licensed music', 'Vertical cuts for Instagram and TikTok'],
+  },
+  {
+    title: 'Commercial Properties',
+    body: 'Development sites, retail centers, office buildings, and land parcels. Progress documentation, marketing packages, and the elevated perspective commercial listings demand.',
+    points: ['Site progress documentation', 'Large parcel and acreage coverage', 'Custom deliverables for marketing teams'],
+  },
+];
+---
+
+<section id="services">
+  <div class="container">
+    <p class="kicker">What We Do</p>
+    <h2>Media that moves listings</h2>
+    <p class="section-intro">
+      Built for realtors, brokers, developers, and homeowners who want their
+      property presented at its absolute best.
+    </p>
+    <div class="services-grid">
+      {services.map((service) => (
+        <article class="card service">
+          <h3>{service.title}</h3>
+          <p>{service.body}</p>
+          <ul>
+            {service.points.map((point) => <li>{point}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .service {
+    padding: 2.25rem 2rem;
+  }
+
+  .service h3 {
+    margin-bottom: 0.75rem;
+  }
+
+  .service p {
+    font-size: 0.9875rem;
+    color: var(--stone);
+  }
+
+  .service ul {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .service li {
+    position: relative;
+    padding-left: 1.4rem;
+    font-size: 0.9rem;
+    color: var(--stone);
+  }
+
+  .service li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-top: 2px solid var(--gold-500);
+    border-right: 2px solid var(--gold-500);
+    transform: rotate(45deg);
+  }
+</style>

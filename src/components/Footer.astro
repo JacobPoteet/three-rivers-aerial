@@ -1,0 +1,37 @@
+---
+import Logo from './Logo.astro';
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="container footer-inner">
+    <Logo size={28} />
+    <p>
+      FAA Part 107 certified &amp; insured drone operations ·
+      Pittsburgh, Pennsylvania
+    </p>
+    <p class="copyright">&copy; {year} Three Rivers Aerial Co. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--ink-600);
+    padding-block: 3rem;
+    text-align: center;
+  }
+
+  .footer-inner {
+    display: grid;
+    justify-items: center;
+    gap: 1rem;
+  }
+
+  footer p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--stone-dim);
+  }
+
+  .copyright { font-size: 0.8125rem; }
+</style>

@@ -1,0 +1,164 @@
+/* ============================================
+   Three Rivers Aerial Co. — Design System
+   Black & Gold, premium Pittsburgh
+   ============================================ */
+
+:root {
+  /* Color palette */
+  --ink-900: #0a0a0c;      /* page background */
+  --ink-800: #101014;      /* raised surfaces */
+  --ink-700: #17171d;      /* cards */
+  --ink-600: #22222a;      /* borders, dividers */
+  --gold-500: #d4af37;     /* primary gold */
+  --gold-400: #e3c565;     /* hover gold */
+  --gold-600: #a8862a;     /* deep gold */
+  --cream: #f5f1e6;        /* headings */
+  --stone: #b9b4a6;        /* body text */
+  --stone-dim: #7d7a70;    /* muted text */
+
+  /* Typography */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Layout */
+  --container: 1160px;
+  --section-pad: clamp(4.5rem, 9vw, 7.5rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--ink-900);
+  color: var(--stone);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--cream);
+  font-weight: 500;
+  line-height: 1.15;
+  margin: 0 0 1rem;
+}
+
+h1 { font-size: clamp(2.75rem, 6vw, 4.75rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+h3 { font-size: 1.5rem; }
+
+p { margin: 0 0 1.25rem; }
+
+a {
+  color: var(--gold-500);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover { color: var(--gold-400); }
+
+img { max-width: 100%; display: block; }
+
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+section { padding-block: var(--section-pad); }
+
+/* Section header pattern: gold kicker + big serif title */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-500);
+  margin-bottom: 1.25rem;
+}
+
+.kicker::before {
+  content: '';
+  width: 2.5rem;
+  height: 1px;
+  background: var(--gold-600);
+}
+
+.section-intro {
+  max-width: 640px;
+  font-size: 1.125rem;
+  color: var(--stone);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.95rem 2.1rem;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: 1px solid var(--gold-500);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold-400), var(--gold-500) 55%, var(--gold-600));
+  color: var(--ink-900);
+}
+
+.btn-gold:hover {
+  box-shadow: 0 6px 28px rgba(212, 175, 55, 0.35);
+  transform: translateY(-2px);
+  color: var(--ink-900);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--cream);
+}
+
+.btn-outline:hover {
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--gold-400);
+}
+
+/* Cards */
+.card {
+  background: var(--ink-700);
+  border: 1px solid var(--ink-600);
+  border-radius: 4px;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.card:hover {
+  border-color: rgba(212, 175, 55, 0.45);
+  transform: translateY(-4px);
+}
+
+/* Utility */
+.text-gold { color: var(--gold-500); }
+
+::selection {
+  background: var(--gold-500);
+  color: var(--ink-900);
+}

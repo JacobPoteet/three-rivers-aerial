@@ -1,0 +1,78 @@
+---
+// Personalize this section — swap in your name, story, and a headshot or
+// drone-in-hand photo (public/images/about.jpg) when ready.
+---
+
+<section id="about" class="about">
+  <div class="container about-grid">
+    <div>
+      <p class="kicker">About</p>
+      <h2>Rooted in Pittsburgh,<br />focused from above</h2>
+      <p>
+        Three Rivers Aerial Co. is a Pittsburgh-based drone media company serving
+        realtors, brokers, developers, and homeowners across the Greater Pittsburgh
+        area. From the South Hills to the North Shore, from Sewickley estates to
+        Strip District commercial blocks — we know these neighborhoods, their light,
+        and how to make them look their best.
+      </p>
+      <p>
+        Every flight is flown by an FAA Part 107 certified pilot, fully insured,
+        with airspace clearance handled before we ever leave the ground. You get
+        polished, ready-to-publish media — we handle everything else.
+      </p>
+      <a href="#contact" class="btn btn-gold">Work With Us</a>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <strong>68%</strong>
+        <span>of listings with aerial media sell faster than those without</span>
+      </div>
+      <div class="stat">
+        <strong>48hr</strong>
+        <span>standard turnaround from flight to final delivery</span>
+      </div>
+      <div class="stat">
+        <strong>100%</strong>
+        <span>FAA-compliant flights with full liability insurance</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about .btn { margin-top: 0.75rem; }
+
+  .stats {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .stat {
+    border-left: 2px solid var(--gold-500);
+    padding: 0.5rem 0 0.5rem 1.5rem;
+  }
+
+  .stat strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--cream);
+    line-height: 1.1;
+  }
+
+  .stat span {
+    font-size: 0.9rem;
+    color: var(--stone-dim);
+  }
+
+  @media (max-width: 820px) {
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  }
+</style>

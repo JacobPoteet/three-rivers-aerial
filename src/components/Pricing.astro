@@ -1,0 +1,153 @@
+---
+// Edit prices and inclusions here — each object is one pricing card.
+const tiers = [
+  {
+    name: 'The Mon',
+    price: '$249',
+    tagline: 'Aerial photos that make the listing',
+    features: [
+      '15+ edited aerial photos',
+      'Multiple altitudes and angles',
+      'MLS-ready resolution and formats',
+      '48-hour delivery',
+    ],
+    featured: false,
+  },
+  {
+    name: 'The Allegheny',
+    price: '$449',
+    tagline: 'Photos plus a cinematic aerial film',
+    features: [
+      'Everything in The Mon',
+      '60–90 second cinematic 4K video',
+      'Licensed music and professional edit',
+      'Vertical cut for social media',
+      '48-hour delivery',
+    ],
+    featured: true,
+  },
+  {
+    name: 'The Ohio',
+    price: '$699',
+    tagline: 'The full marketing package',
+    features: [
+      'Everything in The Allegheny',
+      '25+ edited aerial photos',
+      'Twilight / golden-hour session',
+      'Neighborhood and amenity flyover',
+      'Lot line overlay graphics',
+      'Priority 24-hour delivery',
+    ],
+    featured: false,
+  },
+];
+---
+
+<section id="pricing">
+  <div class="container">
+    <p class="kicker">Packages</p>
+    <h2>Three rivers, three packages</h2>
+    <p class="section-intro">
+      Straightforward pricing for residential listings. Commercial projects,
+      construction progress, and multi-property packages are quoted individually —
+      <a href="#contact">get in touch</a> for a custom estimate.
+    </p>
+    <div class="tiers">
+      {tiers.map((tier) => (
+        <article class={`card tier ${tier.featured ? 'featured' : ''}`}>
+          {tier.featured && <span class="badge">Most Popular</span>}
+          <h3>{tier.name}</h3>
+          <p class="tagline">{tier.tagline}</p>
+          <p class="price">{tier.price}<span> / listing</span></p>
+          <ul>
+            {tier.features.map((feature) => <li>{feature}</li>)}
+          </ul>
+          <a href="#contact" class={`btn ${tier.featured ? 'btn-gold' : 'btn-outline'}`}>Book This Package</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+
+  .tier {
+    position: relative;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tier.featured {
+    border-color: var(--gold-500);
+    background: linear-gradient(180deg, rgba(212, 175, 55, 0.08), var(--ink-700) 40%);
+  }
+
+  .badge {
+    position: absolute;
+    top: -0.8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold-500);
+    color: var(--ink-900);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.3rem 1rem;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+    color: var(--stone-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  .price {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+    line-height: 1;
+  }
+
+  .price span {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--stone-dim);
+  }
+
+  .tier ul {
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 0;
+    display: grid;
+    gap: 0.7rem;
+    flex-grow: 1;
+  }
+
+  .tier li {
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 0.9375rem;
+  }
+
+  .tier li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--gold-500);
+    font-weight: 700;
+  }
+
+  .tier .btn { justify-content: center; }
+</style>

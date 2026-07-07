@@ -1,0 +1,72 @@
+---
+const items = [
+  {
+    title: 'FAA Part 107 Certified',
+    detail: 'Licensed commercial drone pilot',
+    icon: 'M12 2l2.4 6.2L21 9l-5 4.2 1.6 6.8L12 16.8 6.4 20l1.6-6.8L3 9l6.6-.8L12 2z',
+  },
+  {
+    title: 'Fully Insured',
+    detail: 'Liability coverage on every flight',
+    icon: 'M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z',
+  },
+  {
+    title: 'Greater Pittsburgh',
+    detail: 'Serving the city and surrounding counties',
+    icon: 'M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7zm0 4.5A2.5 2.5 0 1 0 12 11.5 2.5 2.5 0 0 0 12 6.5z',
+  },
+  {
+    title: '48-Hour Turnaround',
+    detail: 'Edited media delivered fast',
+    icon: 'M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 5v5.4l4.2 2.5-.8 1.3L11 13V7h2z',
+  },
+];
+---
+
+<div class="trust">
+  <div class="container trust-grid">
+    {items.map((item) => (
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+          <path d={item.icon} fill="var(--gold-500)" />
+        </svg>
+        <div>
+          <strong>{item.title}</strong>
+          <span>{item.detail}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .trust {
+    background: var(--ink-800);
+    border-block: 1px solid var(--ink-600);
+    padding-block: 1.75rem;
+  }
+
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.5rem 2rem;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .trust-item strong {
+    display: block;
+    color: var(--cream);
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  .trust-item span {
+    font-size: 0.8125rem;
+    color: var(--stone-dim);
+  }
+</style>

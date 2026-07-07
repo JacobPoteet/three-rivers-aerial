@@ -1,0 +1,49 @@
+---
+interface Props {
+  size?: number;
+}
+const { size = 34 } = Astro.props;
+---
+
+<span class="logo">
+  <svg width={size} height={size} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M10 10 C 22 22, 28 29, 32 40" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M54 10 C 42 22, 36 29, 32 40" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M32 40 L 32 58" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </svg>
+  <span class="logo-text">
+    <strong>Three Rivers</strong>
+    <em>Aerial Co.</em>
+  </span>
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .logo-text strong {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+  }
+
+  .logo-text em {
+    font-style: normal;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold-500);
+  }
+</style>

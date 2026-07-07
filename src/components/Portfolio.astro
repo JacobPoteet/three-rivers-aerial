@@ -1,0 +1,91 @@
+---
+// PORTFOLIO IMAGES
+// Replace each placeholder SVG with a real photo:
+//   1. Drop your photo into public/images/portfolio/ (e.g. shadyside-estate.jpg)
+//   2. Change the `src` below to match (e.g. /images/portfolio/shadyside-estate.jpg)
+//   3. Update the label and caption
+// Recommended: export photos around 1600px wide, JPEG quality ~80.
+const shots = [
+  { src: '/images/portfolio/placeholder-1.svg', label: 'Residential Estate', caption: 'Twilight aerial — replace with your photo' },
+  { src: '/images/portfolio/placeholder-2.svg', label: 'Suburban Listing', caption: 'Full-lot coverage — replace with your photo' },
+  { src: '/images/portfolio/placeholder-3.svg', label: 'Commercial Site', caption: 'Development parcel — replace with your photo' },
+  { src: '/images/portfolio/placeholder-4.svg', label: 'Riverfront Property', caption: 'Waterfront angle — replace with your photo' },
+  { src: '/images/portfolio/placeholder-5.svg', label: 'Downtown Skyline', caption: 'City context shot — replace with your photo' },
+  { src: '/images/portfolio/placeholder-6.svg', label: 'Acreage & Land', caption: 'Boundary overview — replace with your photo' },
+];
+---
+
+<section id="portfolio" class="portfolio">
+  <div class="container">
+    <p class="kicker">The Work</p>
+    <h2>A portfolio worth the altitude</h2>
+    <p class="section-intro">
+      A selection of recent flights over residential and commercial properties
+      in and around Pittsburgh.
+    </p>
+    <div class="grid">
+      {shots.map((shot) => (
+        <figure class="shot">
+          <img src={shot.src} alt={shot.label} loading="lazy" width="800" height="600" />
+          <figcaption>
+            <strong>{shot.label}</strong>
+            <span>{shot.caption}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .portfolio {
+    background: var(--ink-800);
+    border-block: 1px solid var(--ink-600);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+    margin-top: 3rem;
+  }
+
+  .shot {
+    position: relative;
+    margin: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--ink-600);
+    aspect-ratio: 4 / 3;
+  }
+
+  .shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .shot:hover img { transform: scale(1.04); }
+
+  figcaption {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    padding: 2.25rem 1.25rem 1rem;
+    background: linear-gradient(to top, rgba(10, 10, 12, 0.92), transparent);
+    display: flex;
+    flex-direction: column;
+  }
+
+  figcaption strong {
+    color: var(--cream);
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+  }
+
+  figcaption span {
+    font-size: 0.8125rem;
+    color: var(--stone-dim);
+  }
+</style>
