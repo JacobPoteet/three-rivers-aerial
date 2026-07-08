@@ -1,14 +1,14 @@
 // Central business info. Update these once and both the contact section and
 // the structured data / social meta stay in sync.
-// TODO (Jacob): replace the placeholder email + phone with real values, add
-// real social profile URLs to `socials`, and confirm the service-area list.
+// TODO (Jacob): add real social profile URLs to `socials` and confirm the
+// service-area list.
 export const site = {
   name: 'Three Rivers Aerial Co.',
   legalName: 'Three Rivers Aerial Co.',
   description:
     'FAA-licensed drone photography and aerial videography for residential and commercial real estate in Pittsburgh, PA. Cinematic aerial media that helps listings sell faster.',
   email: 'hello@threeriversaerial.com',
-  phone: '(412) 555-0148',
+  phone: '(724) 714-6679',
   areaServed: 'Greater Pittsburgh, Pennsylvania',
   region: 'PA',
   locality: 'Pittsburgh',
