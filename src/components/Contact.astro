@@ -7,9 +7,11 @@
 // Until then the form will show Formspree's error page on submit.
 const FORM_ACTION = 'https://formspree.io/f/YOUR_FORM_ID';
 
-// Update with your real contact details:
-const EMAIL = 'hello@threeriversaerial.com';
-const PHONE = '(412) 555-0148';
+// Contact details live in src/data/site.ts so they stay in sync with the
+// structured data / social meta in Base.astro.
+import { site } from '../data/site';
+const EMAIL = site.email;
+const PHONE = site.phone;
 ---
 
 <section id="contact" class="contact">
