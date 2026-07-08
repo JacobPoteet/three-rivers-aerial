@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="8" fill="#0a0a0c"/>
-  <!-- Three rivers converging at the Point -->
-  <path d="M10 14 C 22 24, 28 30, 32 40" stroke="#d4af37" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path d="M54 14 C 42 24, 36 30, 32 40" stroke="#d4af37" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path d="M32 40 L 32 56" stroke="#d4af37" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <!-- Three rivers converging at the Point: Allegheny + Monongahela merge into the Ohio (a "<" shape) -->
+  <path d="M56 12 C 44 22, 38 27, 30 32" stroke="#d4af37" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M56 52 C 44 42, 38 37, 30 32" stroke="#d4af37" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M30 32 L 6 32" stroke="#d4af37" stroke-width="3.5" fill="none" stroke-linecap="round"/>
 </svg>
