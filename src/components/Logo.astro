@@ -7,9 +7,10 @@ const { size = 34 } = Astro.props;
 
 <span class="logo">
   <svg width={size} height={size} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M10 10 C 22 22, 28 29, 32 40" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <path d="M54 10 C 42 22, 36 29, 32 40" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <path d="M32 40 L 32 58" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <!-- Allegheny (from upper-right) and Monongahela (from lower-right) meet at the Point, forming the Ohio flowing out to the left -->
+    <path d="M56 10 C 44 22, 38 27, 30 32" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M56 54 C 44 42, 38 37, 30 32" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M30 32 L 6 32" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round"/>
   </svg>
   <span class="logo-text">
     <strong>Three Rivers</strong>
