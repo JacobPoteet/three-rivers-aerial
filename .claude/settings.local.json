@@ -15,7 +15,12 @@
       "PowerShell(git config --global user.name)",
       "PowerShell(git config --global user.email)",
       "PowerShell(git -C F:\\\\GitHub\\\\DronePhotography add -A)",
-      "PowerShell(git -C F:\\\\GitHub\\\\DronePhotography log --oneline)"
+      "PowerShell(git -C F:\\\\GitHub\\\\DronePhotography log --oneline)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\('Path','Machine'\\) + ';' + [System.Environment]::GetEnvironmentVariable\\('Path','User'\\); Write-Output '' | gh auth login --hostname github.com --git-protocol https --web)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\('Path','Machine'\\) + ';' + [System.Environment]::GetEnvironmentVariable\\('Path','User'\\); Write-Output '' | gh auth login --hostname github.com --git-protocol https --web 2>&1 | Out-File -Encoding utf8 \"$env:TEMP\\\\gh-login.log\"; gh auth status 2>&1 | Out-File -Encoding utf8 -Append \"$env:TEMP\\\\gh-login.log\")",
+      "PowerShell(Start-Sleep -Seconds 4; Get-Content \"$env:TEMP\\\\gh-login.log\")",
+      "PowerShell(Get-Content \"$env:TEMP\\\\gh-login.log\" -Tail 15)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\('Path','Machine'\\) + ';' + [System.Environment]::GetEnvironmentVariable\\('Path','User'\\); Set-Location F:\\\\GitHub\\\\DronePhotography; gh repo create three-rivers-aerial --public --source . --remote origin --push --description \"Marketing site for Three Rivers Aerial Co. - drone photography for Pittsburgh real estate \\(Astro + Cloudflare Pages\\)\")"
     ]
   }
 }
