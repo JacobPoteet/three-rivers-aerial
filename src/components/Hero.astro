@@ -17,6 +17,7 @@
     >
       <source src="/videos/hero.mp4" type="video/mp4" />
     </video>
+    <div class="hero-scrim"></div>
   </div>
   <div class="container hero-inner">
     <p class="kicker">Pittsburgh, Pennsylvania</p>
@@ -48,6 +49,12 @@
     position: absolute;
     inset: 0;
     z-index: -1;
+    opacity: 0;
+    animation: hero-fade-in 1.4s ease-out 0.15s forwards;
+  }
+
+  @keyframes hero-fade-in {
+    to { opacity: 1; }
   }
 
   .hero-video {
@@ -56,6 +63,26 @@
     object-fit: cover;
     object-position: center bottom;
     opacity: 0.9;
+  }
+
+  /* Darkens the video toward the left and bottom, where the headline and
+     copy sit, so the text stays legible over bright footage. */
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        to right,
+        rgba(10, 10, 12, 0.82) 0%,
+        rgba(10, 10, 12, 0.45) 42%,
+        rgba(10, 10, 12, 0) 78%
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(10, 10, 12, 0.35) 0%,
+        rgba(10, 10, 12, 0) 30%
+      );
   }
 
   .hero-fade {
@@ -80,5 +107,12 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg {
+      animation: none;
+      opacity: 1;
+    }
   }
 </style>
