@@ -21,19 +21,43 @@ const ogImage = new URL('/images/og.jpg', base).href;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
+  '@id': `${base.href}#business`,
   name: site.name,
+  legalName: site.legalName,
   description: site.description,
   url: base.href,
   image: ogImage,
+  logo: new URL('/favicon.svg', base).href,
   email: site.email,
   telephone: site.phone,
   priceRange: site.priceRange,
-  areaServed: site.areaServed,
   address: {
     '@type': 'PostalAddress',
     addressLocality: site.locality,
     addressRegion: site.region,
     addressCountry: 'US',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: site.geo.latitude,
+    longitude: site.geo.longitude,
+  },
+  areaServed: site.serviceAreas.map((area) => ({
+    '@type': 'City',
+    name: area,
+  })),
+  ...(site.socials.length ? { sameAs: site.socials } : {}),
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Drone Media Services',
+    itemListElement: site.services.map((service) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: service.name,
+        description: service.description,
+      },
+    })),
   },
 };
 ---

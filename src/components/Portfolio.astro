@@ -26,7 +26,7 @@ const shots = [
     <div class="grid">
       {shots.map((shot) => (
         <figure class="shot">
-          <img src={shot.src} alt={shot.label} loading="lazy" width="800" height="600" />
+          <img src={shot.src} alt={`${shot.label} — aerial drone photography in the Greater Pittsburgh area`} loading="lazy" width="800" height="600" />
           <figcaption>
             <strong>{shot.label}</strong>
             <span>{shot.caption}</span>
