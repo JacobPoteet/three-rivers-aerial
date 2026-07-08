@@ -4,9 +4,10 @@ const tiers = [
   {
     name: 'The Mon',
     price: '$249',
+    salePrice: '$149',
     tagline: 'Aerial photos that make the listing',
     features: [
-      '15+ edited aerial photos',
+      '10 edited aerial photos',
       'Multiple altitudes and angles',
       'MLS-ready resolution and formats',
       '48-hour delivery',
@@ -16,9 +17,10 @@ const tiers = [
   {
     name: 'The Allegheny',
     price: '$449',
+    salePrice: '$299',
     tagline: 'Photos plus a cinematic aerial film',
     features: [
-      'Everything in The Mon',
+      'Everything in The Mon + 5 additional photos',
       '60–90 second cinematic 4K video',
       'Licensed music and professional edit',
       'Vertical cut for social media',
@@ -29,6 +31,7 @@ const tiers = [
   {
     name: 'The Ohio',
     price: '$699',
+    salePrice: '$599',
     tagline: 'The full marketing package',
     features: [
       'Everything in The Allegheny',
@@ -53,18 +56,36 @@ const tiers = [
       <a href="#contact">get in touch</a> for a custom estimate.
     </p>
     <div class="tiers">
-      {tiers.map((tier) => (
+      {tiers.map((tier) => {
+        const save = tier.salePrice
+          ? Number(tier.price.replace(/\D/g, '')) - Number(tier.salePrice.replace(/\D/g, ''))
+          : 0;
+        return (
         <article class={`card tier ${tier.featured ? 'featured' : ''}`}>
           {tier.featured && <span class="badge">Most Popular</span>}
           <h3>{tier.name}</h3>
           <p class="tagline">{tier.tagline}</p>
-          <p class="price">{tier.price}<span> / listing</span></p>
+          {tier.salePrice ? (
+            <>
+              <p class="sale-flag">
+                Limited time<span class="dot">·</span>save ${save}
+              </p>
+              <p class="price">
+                <span class="was">{tier.price}</span>
+                <span class="now">{tier.salePrice}</span>
+                <span class="unit"> / listing</span>
+              </p>
+            </>
+          ) : (
+            <p class="price">{tier.price}<span class="unit"> / listing</span></p>
+          )}
           <ul>
             {tier.features.map((feature) => <li>{feature}</li>)}
           </ul>
           <a href="#contact" class={`btn ${tier.featured ? 'btn-gold' : 'btn-outline'}`}>Book This Package</a>
         </article>
-      ))}
+        );
+      })}
     </div>
   </div>
 </section>
@@ -120,10 +141,37 @@ const tiers = [
     line-height: 1;
   }
 
-  .price span {
+  .price .unit {
     font-family: var(--font-body);
     font-size: 0.875rem;
     color: var(--stone-dim);
+  }
+
+  .price .was {
+    font-size: 1.5rem;
+    color: var(--stone-dim);
+    text-decoration: line-through;
+    margin-right: 0.5rem;
+  }
+
+  .price .now {
+    color: var(--gold-500);
+  }
+
+  .sale-flag {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-500);
+  }
+
+  .sale-flag .dot {
+    margin-inline: 0.5rem;
+    opacity: 0.6;
   }
 
   .tier ul {
