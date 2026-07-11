@@ -5,10 +5,11 @@
 // different towns) as new flights come in. To add a shot:
 //   1. Drop a web-sized photo into public/images/portfolio/ (~1600px wide, JPEG q80)
 //   2. Add an entry below with its src, label, and caption
+// The first shot renders as the large "featured" tile in the grid.
 const shots = [
-  { src: '/images/portfolio/backyard-front-view.jpg', label: 'Neighborhood Context', caption: 'Wide establishing shot with river and skyline behind' },
-  { src: '/images/portfolio/backyard-overhead.jpg', label: 'Top-Down Overhead', caption: 'Straight-down map view of lot lines and rooflines' },
-  { src: '/images/portfolio/front-overhead-angle.jpg', label: 'Angled Overhead', caption: 'Three-quarter angle highlighting roof and solar detail' },
+  { src: '/images/portfolio/front-overhead-angle.jpg', label: 'Angled Overhead', caption: 'A three-quarter angle emphasizing roof detail, the solar array, and how the home sits on its parcel.' },
+  { src: '/images/portfolio/backyard-front-view.jpg', label: 'Neighborhood Context', caption: 'A wide establishing frame that sets the home against the river, tree line, and city skyline beyond.' },
+  { src: '/images/portfolio/backyard-overhead.jpg', label: 'Top-Down Overhead', caption: 'A straight-down, map-style view showing the full lot, property lines, and roof condition at a glance.' },
 ];
 ---
 
@@ -21,8 +22,8 @@ const shots = [
       in and around Pittsburgh.
     </p>
     <div class="grid">
-      {shots.map((shot) => (
-        <figure class="shot">
+      {shots.map((shot, i) => (
+        <figure class={i === 0 ? 'shot featured' : 'shot'}>
           <img src={shot.src} alt={`${shot.label} — aerial drone photography in the Greater Pittsburgh area`} loading="lazy" width="800" height="600" />
           <figcaption>
             <strong>{shot.label}</strong>
@@ -42,9 +43,27 @@ const shots = [
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
     margin-top: 3rem;
+  }
+
+  /* The featured tile fills the left two columns and both rows, so the
+     three shots pack into one balanced rectangle instead of leaving an
+     orphan tile on a second row. */
+  .shot.featured {
+    grid-column: span 2;
+    grid-row: span 2;
+    aspect-ratio: auto;
+  }
+
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; }
+    .shot.featured {
+      grid-column: auto;
+      grid-row: auto;
+      aspect-ratio: 4 / 3;
+    }
   }
 
   .shot {
@@ -78,11 +97,16 @@ const shots = [
   figcaption strong {
     color: var(--cream);
     font-family: var(--font-display);
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.35rem;
   }
 
   figcaption span {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
     color: var(--stone-dim);
+    /* Reserve two lines so the title sits at the same height across all
+       tiles, even when a caption happens to wrap to a single line. */
+    min-height: 2.8em;
   }
 </style>
