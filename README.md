@@ -28,18 +28,23 @@ npm run build      # production build into dist/
 
 ## Content checklist (things to personalize)
 
-- [ ] **Portfolio photos** — drop images into `public/images/portfolio/` and update
-      the list at the top of [src/components/Portfolio.astro](src/components/Portfolio.astro).
-      Export around 1600px wide, JPEG quality ~80.
-- [ ] **Hero image** — replace the stylized skyline with your best aerial shot:
-      see the comment at the top of [src/components/Hero.astro](src/components/Hero.astro).
-- [ ] **Contact form** — create a free form at <https://formspree.io> and paste the
-      form ID into [src/components/Contact.astro](src/components/Contact.astro)
-      (`FORM_ACTION`). Also update the email and phone constants there.
-- [ ] **Pricing** — edit package names, prices, and inclusions at the top of
-      [src/components/Pricing.astro](src/components/Pricing.astro).
-- [ ] **About copy** — personalize [src/components/About.astro](src/components/About.astro)
-      with your name and story.
+Done so far: real portfolio photos, the hero aerial video, the live contact form
+(Formspree + real email/phone in [src/data/site.ts](src/data/site.ts)), and the
+pricing packages.
+
+Still to personalize:
+
+- [ ] **About copy** — [src/components/About.astro](src/components/About.astro) still
+      uses generic company copy. Add your name and story, and a headshot or
+      drone-in-hand photo (`public/images/about.jpg`).
+- [ ] **Social profiles** — add real profile URLs (Google Business, Instagram, etc.)
+      to `socials` in [src/data/site.ts](src/data/site.ts); they feed the structured
+      data automatically.
+- [ ] **Broaden the portfolio** — the current three shots are all one residential
+      block. Add commercial, riverfront, and twilight variety as new flights come in:
+      drop web-sized photos (~1600px wide, JPEG q80) into `public/images/portfolio/`
+      and add entries at the top of
+      [src/components/Portfolio.astro](src/components/Portfolio.astro).
 
 ## Site structure
 
