@@ -1,0 +1,23 @@
+# Cloudflare Pages response headers. Applied in production only; the local
+# dev server ignores this file.
+# https://developers.cloudflare.com/pages/configuration/headers/
+
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+# Astro's build output has content hashes in its filenames, so it can be
+# cached forever; a changed file gets a new name.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Photos and video keep their names when replaced, so cache for a week
+# rather than forever.
+/images/*
+  Cache-Control: public, max-age=604800
+
+/videos/*
+  Cache-Control: public, max-age=604800
