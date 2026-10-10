@@ -29,14 +29,14 @@ npm run build      # production build into dist/
 ## Content checklist (things to personalize)
 
 Done so far: real portfolio photos, the hero aerial video, the live contact form
-(Formspree + real email/phone in [src/data/site.ts](src/data/site.ts)), and the
-pricing packages.
+(Formspree + real email/phone in [src/data/site.ts](src/data/site.ts)), the
+pricing packages, and the About copy.
 
 Still to personalize:
 
-- [ ] **About copy** — [src/components/About.astro](src/components/About.astro) still
-      uses generic company copy. Add your name and story, and a headshot or
-      drone-in-hand photo (`public/images/about.jpg`).
+- [ ] **About photo** (optional): a headshot or drone-in-hand photo
+      (`public/images/about.jpg`) for
+      [src/components/About.astro](src/components/About.astro).
 - [ ] **Social profiles** — add real profile URLs (Google Business, Instagram, etc.)
       to `socials` in [src/data/site.ts](src/data/site.ts); they feed the structured
       data automatically.
@@ -52,3 +52,19 @@ Single-page site with anchor navigation. Section order lives in
 [src/pages/index.astro](src/pages/index.astro); each section is its own component
 in `src/components/`. Colors and typography are CSS variables in
 [src/styles/global.css](src/styles/global.css).
+
+Where to edit things:
+
+- **Business info** (name, email, phone, service areas):
+  [src/data/site.ts](src/data/site.ts). Feeds the contact section and the
+  search-engine structured data.
+- **Prices and package contents**: [src/data/packages.ts](src/data/packages.ts).
+  Feeds the pricing cards, the contact form's Package dropdown, and the
+  structured-data price range.
+- **Portfolio shots**: the list at the top of
+  [src/components/Portfolio.astro](src/components/Portfolio.astro).
+- **Not-found page**: [src/pages/404.astro](src/pages/404.astro).
+- **Caching and security headers** (production only):
+  [public/_headers](public/_headers).
+
+Node 24 is pinned in [.nvmrc](.nvmrc); Cloudflare Pages uses the same file.
