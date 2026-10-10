@@ -1,0 +1,57 @@
+---
+// Cloudflare Pages serves dist/404.html with a 404 status for unknown URLs.
+// Without this file, Pages falls back to single-page-app mode and answers
+// every URL with the homepage and a 200, which search engines treat as
+// duplicate content.
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base title="Page not found | Three Rivers Aerial Co." noindex>
+  <header class="bar">
+    <div class="container">
+      <a href="/" aria-label="Three Rivers Aerial Co., home"><Logo /></a>
+    </div>
+  </header>
+  <main class="not-found">
+    <div class="container">
+      <h1>We couldn't find that page.</h1>
+      <p>
+        The link may be out of date, or the address may have a typo. Everything
+        on the site lives on the homepage.
+      </p>
+      <div class="actions">
+        <a href="/" class="btn btn-gold">Go to the homepage</a>
+        <a href="/#contact" class="btn btn-outline">Book a Flight</a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .bar {
+    border-bottom: 1px solid rgba(212, 175, 55, 0.14);
+    padding-block: 0.85rem;
+  }
+
+  .not-found {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    padding-block: var(--section-pad);
+  }
+
+  .not-found p {
+    max-width: 52ch;
+    font-size: 1.125rem;
+    margin-bottom: 2.25rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+</style>

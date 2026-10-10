@@ -5,12 +5,15 @@ import { site } from '../data/site';
 interface Props {
   title?: string;
   description?: string;
+  /** Keep the page out of search results (used by the 404 page). */
+  noindex?: boolean;
 }
 
 const {
   title = 'Three Rivers Aerial Co. | Drone Photography for Pittsburgh Real Estate',
   description =
     'FAA-licensed aerial photography and videography for residential and commercial real estate in Pittsburgh, PA. Cinematic drone media that sells properties faster.',
+  noindex = false,
 } = Astro.props;
 
 // Absolute URLs for canonical + social cards (fall back to the configured site).
@@ -69,7 +72,7 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <meta name="theme-color" content="#0a0a0c" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
