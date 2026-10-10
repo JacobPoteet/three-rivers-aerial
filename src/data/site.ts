@@ -2,6 +2,13 @@
 // the structured data / social meta stay in sync.
 // TODO (Jacob): add real social profile URLs to `socials` and confirm the
 // service-area list.
+import { packages } from './packages';
+
+// Cheapest to most expensive package at its current (sale) price, e.g.
+// "$149–$599", so the structured data follows any pricing change.
+const currentPrices = packages.map((pkg) => Number((pkg.salePrice ?? pkg.price).replace(/\D/g, '')));
+const priceRange = `$${Math.min(...currentPrices)}–$${Math.max(...currentPrices)}`;
+
 export const site = {
   name: 'Three Rivers Aerial Co.',
   legalName: 'Three Rivers Aerial Co.',
@@ -14,8 +21,7 @@ export const site = {
   locality: 'Pittsburgh',
   // Downtown Pittsburgh — approximate business/service-area center.
   geo: { latitude: 40.4406, longitude: -79.9959 },
-  // Roughly $149 (The Mon sale) to $599 (The Ohio sale).
-  priceRange: '$149–$599',
+  priceRange,
 
   // Neighborhoods / municipalities used for local-SEO areaServed markup.
   serviceAreas: [
