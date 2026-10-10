@@ -8,6 +8,7 @@ const FORM_ACTION = 'https://formspree.io/f/xdarrkor';
 // Contact details live in src/data/site.ts so they stay in sync with the
 // structured data / social meta in Base.astro.
 import { site } from '../data/site';
+import { packages } from '../data/packages';
 const EMAIL = site.email;
 const PHONE = site.phone;
 ---
@@ -15,7 +16,6 @@ const PHONE = site.phone;
 <section id="contact" class="contact">
   <div class="container contact-grid">
     <div>
-      <p class="kicker">Get In Touch</p>
       <h2>Let's get your listing off the ground</h2>
       <p class="section-intro">
         Tell us about the property and we'll respond within one business day
@@ -56,6 +56,14 @@ const PHONE = site.phone;
           </select>
         </label>
       </div>
+      <label>
+        Package
+        <select name="package">
+          <option>Not sure yet</option>
+          {packages.map((pkg) => <option value={pkg.name}>{pkg.name} ({pkg.salePrice ?? pkg.price})</option>)}
+          <option>Custom / commercial quote</option>
+        </select>
+      </label>
       <label>
         Property Address
         <input type="text" name="address" placeholder="Street, City, PA" />
@@ -140,8 +148,6 @@ const PHONE = site.phone;
     gap: 1.15rem;
   }
 
-  form:hover { transform: none; }
-
   .row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -168,7 +174,7 @@ const PHONE = site.phone;
     color: var(--cream);
     font-family: var(--font-body);
     font-size: 0.9375rem;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
   input:focus,
@@ -176,9 +182,20 @@ const PHONE = site.phone;
   textarea:focus {
     outline: none;
     border-color: var(--gold-500);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
   }
 
   textarea { resize: vertical; }
+
+  /* Set by Pricing.astro when a package button pre-selects this field. */
+  select.prefilled { animation: prefill-flash 1.8s ease-out 0.4s both; }
+
+  @keyframes prefill-flash {
+    0%, 30% {
+      border-color: var(--gold-400);
+      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.35);
+    }
+  }
 
   form .btn { justify-content: center; }
 

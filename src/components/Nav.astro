@@ -12,7 +12,7 @@ const links = [
 <header class="nav-wrap">
   <div class="container nav">
     <a href="#top" class="brand" aria-label="Three Rivers Aerial Co., home">
-      <Logo />
+      <Logo draw />
     </a>
     <nav class="desktop-nav" aria-label="Primary">
       <ul>
@@ -66,6 +66,36 @@ const links = [
       if (e.key === 'Escape') setOpen(false);
     });
   }
+
+  // Let the hero video show through the bar until the visitor scrolls past
+  // the hero. Without JS the bar simply stays solid.
+  const hero = document.getElementById('top');
+  if (wrap && hero) {
+    new IntersectionObserver(
+      ([entry]) => wrap.classList.toggle('over-hero', entry.isIntersecting),
+      { rootMargin: '-80px 0px 0px 0px' }
+    ).observe(hero);
+  }
+
+  // Highlight the link for the section currently in the middle of the screen.
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.desktop-nav a');
+  const sections = [...navLinks]
+    .map((a) => document.querySelector<HTMLElement>(a.hash))
+    .filter((el): el is HTMLElement => el !== null);
+  const visible = new Set<string>();
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) =>
+        entry.isIntersecting ? visible.add(entry.target.id) : visible.delete(entry.target.id)
+      );
+      navLinks.forEach((a) => {
+        if (visible.has(a.hash.slice(1))) a.setAttribute('aria-current', 'true');
+        else a.removeAttribute('aria-current');
+      });
+    },
+    { rootMargin: '-45% 0px -50% 0px' }
+  );
+  sections.forEach((section) => sectionObserver.observe(section));
 </script>
 
 <style>
@@ -74,11 +104,30 @@ const links = [
     inset-inline: 0;
     top: 0;
     z-index: 100;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.14);
+    transition: border-color 0.4s ease;
+  }
+
+  /* The solid bar lives on a pseudo-element so it can fade in and out;
+     a background-color transition can't fade a backdrop blur. */
+  .nav-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
     background: rgba(10, 10, 12, 0.82);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.14);
+    transition: opacity 0.4s ease;
   }
+
+  /* Over the hero: no bar, just a soft shade so the links stay legible. */
+  .nav-wrap.over-hero:not(.open) {
+    border-bottom-color: transparent;
+    background: linear-gradient(to bottom, rgba(10, 10, 12, 0.55), transparent);
+  }
+
+  .nav-wrap.over-hero:not(.open)::before { opacity: 0; }
 
   .nav {
     display: flex;
@@ -97,6 +146,7 @@ const links = [
   }
 
   .desktop-nav a {
+    position: relative;
     font-size: 0.875rem;
     font-weight: 500;
     letter-spacing: 0.1em;
@@ -105,6 +155,24 @@ const links = [
   }
 
   .desktop-nav a:hover { color: var(--gold-400); }
+
+  .desktop-nav a[aria-current] { color: var(--cream); }
+
+  /* Gold rule that draws in under the current section's link. */
+  .desktop-nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0.1em; /* offset the trailing letter-spacing */
+    bottom: -0.35rem;
+    height: 1px;
+    background: var(--gold-500);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+
+  .desktop-nav a[aria-current]::after { transform: scaleX(1); }
 
   .nav-cta {
     padding: 0.6rem 1.4rem;
@@ -146,9 +214,26 @@ const links = [
   .mobile-menu {
     border-top: 1px solid rgba(212, 175, 55, 0.14);
     background: rgba(10, 10, 12, 0.98);
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      display 0.25s allow-discrete;
   }
 
-  .mobile-menu[hidden] { display: none; }
+  /* Slide down on open, back up on close. @starting-style supplies the
+     "before" state when the panel goes from display:none to visible. */
+  .mobile-menu[hidden] {
+    display: none;
+    opacity: 0;
+    transform: translateY(-0.75rem);
+  }
+
+  @starting-style {
+    .mobile-menu:not([hidden]) {
+      opacity: 0;
+      transform: translateY(-0.75rem);
+    }
+  }
 
   .mobile-menu ul {
     list-style: none;

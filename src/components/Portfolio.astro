@@ -15,7 +15,6 @@ const shots = [
 
 <section id="portfolio" class="portfolio">
   <div class="container">
-    <p class="kicker">The Work</p>
     <h2>A portfolio worth the altitude</h2>
     <p class="section-intro">
       A selection of recent flights over residential and commercial properties
@@ -24,7 +23,9 @@ const shots = [
     <div class="grid">
       {shots.map((shot, i) => (
         <figure class={i === 0 ? 'shot featured' : 'shot'}>
-          <img src={shot.src} alt={`${shot.label}: aerial drone photography in the Greater Pittsburgh area`} loading="lazy" width="800" height="600" />
+          <button type="button" class="shot-open" data-index={i} aria-label={`View ${shot.label} full screen`}>
+            <img src={shot.src} alt={`${shot.label}: aerial drone photography in the Greater Pittsburgh area`} loading="lazy" width="1600" height="900" />
+          </button>
           <figcaption>
             <strong>{shot.label}</strong>
             <span>{shot.caption}</span>
@@ -34,6 +35,83 @@ const shots = [
     </div>
   </div>
 </section>
+
+<dialog class="lightbox" aria-label="Portfolio viewer">
+  <figure class="lb-figure">
+    <img class="lb-img" src={shots[0].src} alt="" width="1600" height="900" loading="lazy" />
+    <figcaption class="lb-caption">
+      <strong class="lb-label"></strong>
+      <span class="lb-text"></span>
+      <span class="lb-count" aria-live="polite"></span>
+    </figcaption>
+  </figure>
+  <button type="button" class="lb-btn lb-close" aria-label="Close viewer">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+  </button>
+  <button type="button" class="lb-btn lb-prev" aria-label="Previous photo">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+  </button>
+  <button type="button" class="lb-btn lb-next" aria-label="Next photo">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+  </button>
+</dialog>
+
+<script define:vars={{ shots }}>
+  // Full-screen viewer. The native <dialog> handles focus trapping and
+  // Escape; this adds arrow-key and swipe navigation between shots.
+  const dialog = document.querySelector('.lightbox');
+  const img = dialog.querySelector('.lb-img');
+  const label = dialog.querySelector('.lb-label');
+  const text = dialog.querySelector('.lb-text');
+  const count = dialog.querySelector('.lb-count');
+  let current = 0;
+
+  const show = (index) => {
+    current = (index + shots.length) % shots.length;
+    const shot = shots[current];
+    img.classList.remove('swap');
+    void img.offsetWidth; // restart the crossfade
+    img.classList.add('swap');
+    img.src = shot.src;
+    img.alt = `${shot.label}: aerial drone photography in the Greater Pittsburgh area`;
+    label.textContent = shot.label;
+    text.textContent = shot.caption;
+    count.textContent = `${current + 1} of ${shots.length}`;
+  };
+
+  document.querySelectorAll('.shot-open').forEach((button) => {
+    button.addEventListener('click', () => {
+      show(Number(button.dataset.index));
+      dialog.showModal();
+    });
+  });
+
+  dialog.querySelector('.lb-close').addEventListener('click', () => dialog.close());
+  dialog.querySelector('.lb-prev').addEventListener('click', () => show(current - 1));
+  dialog.querySelector('.lb-next').addEventListener('click', () => show(current + 1));
+
+  dialog.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+  });
+
+  // A click on the dark area around the photo (the dialog itself) closes it.
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+
+  // Horizontal swipe on touch screens.
+  let startX = null;
+  dialog.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse') startX = e.clientX;
+  });
+  dialog.addEventListener('pointerup', (e) => {
+    if (startX === null) return;
+    const dx = e.clientX - startX;
+    startX = null;
+    if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+  });
+</script>
 
 <style>
   .portfolio {
@@ -84,6 +162,21 @@ const shots = [
 
   .shot:hover img { transform: scale(1.04); }
 
+  .shot-open {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+  }
+
+  .shot-open:focus-visible { outline-offset: -4px; }
+
+  /* The caption overlays the photo but shouldn't block clicks on it. */
+  .shot figcaption { pointer-events: none; }
+
   figcaption {
     position: absolute;
     inset-inline: 0;
@@ -108,5 +201,139 @@ const shots = [
     /* Reserve two lines so the title sits at the same height across all
        tiles, even when a caption happens to wrap to a single line. */
     min-height: 2.8em;
+  }
+
+  /* On the two small desktop tiles the description fought the busy photo,
+     so show only the title there. The full caption is in the viewer. */
+  @media (min-width: 761px) {
+    .shot:not(.featured) figcaption span { display: none; }
+  }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: clamp(1rem, 4vw, 3rem);
+    border: 0;
+    background: rgba(6, 6, 8, 0.94);
+    color: var(--stone);
+    display: none;
+    place-items: center;
+    opacity: 0;
+    transition:
+      opacity 0.3s ease,
+      overlay 0.3s allow-discrete,
+      display 0.3s allow-discrete;
+  }
+
+  .lightbox[open] {
+    display: grid;
+    opacity: 1;
+  }
+
+  @starting-style {
+    .lightbox[open] { opacity: 0; }
+  }
+
+  .lightbox::backdrop { background: transparent; }
+
+  :global(html:has(.lightbox[open])) { overflow: hidden; }
+
+  .lb-figure {
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+    max-width: 100%;
+    transition: transform 0.3s ease;
+  }
+
+  @starting-style {
+    .lightbox[open] .lb-figure { transform: scale(0.96); }
+  }
+
+  .lb-img {
+    width: auto;
+    max-width: 100%;
+    max-height: calc(100dvh - 10rem);
+    margin-inline: auto;
+    object-fit: contain;
+    border-radius: 2px;
+  }
+
+  .lb-img.swap { animation: lb-swap 0.35s ease; }
+
+  @keyframes lb-swap {
+    from { opacity: 0.2; }
+  }
+
+  .lb-caption {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 2rem;
+    width: 100%;
+    max-width: 70ch;
+    margin-inline: auto;
+  }
+
+  .lb-label {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--cream);
+  }
+
+  .lb-text {
+    grid-row: 2;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .lb-count {
+    grid-row: 1;
+    grid-column: 2;
+    align-self: center;
+    font-size: 0.875rem;
+    color: var(--stone-dim);
+  }
+
+  .lb-btn {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 50%;
+    background: rgba(10, 10, 12, 0.6);
+    color: var(--cream);
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .lb-btn:hover {
+    border-color: var(--gold-500);
+    color: var(--gold-400);
+  }
+
+  .lb-btn svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .lb-close { top: 1rem; right: 1rem; }
+  .lb-prev { left: 1rem; top: 50%; translate: 0 -50%; }
+  .lb-next { right: 1rem; top: 50%; translate: 0 -50%; }
+
+  /* On phones, move the arrows below the photo, clear of swipes. */
+  @media (max-width: 760px) {
+    .lb-prev,
+    .lb-next { top: auto; bottom: 1rem; translate: none; }
+    .lb-img { max-height: calc(100dvh - 13rem); }
   }
 </style>

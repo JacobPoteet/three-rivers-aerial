@@ -32,8 +32,23 @@
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* For visitors who ask for reduced motion, finish every transition and
+   keyframe animation immediately (landing on its end state). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 body {
@@ -70,6 +85,12 @@ a:hover { color: var(--gold-400); }
 
 img { max-width: 100%; display: block; }
 
+/* Visible keyboard focus everywhere; mouse clicks don't trigger it. */
+:focus-visible {
+  outline: 2px solid var(--gold-400);
+  outline-offset: 3px;
+}
+
 .container {
   max-width: var(--container);
   margin-inline: auto;
@@ -78,7 +99,7 @@ img { max-width: 100%; display: block; }
 
 section { padding-block: var(--section-pad); }
 
-/* Section header pattern: gold kicker + big serif title */
+/* Gold label above the hero headline */
 .kicker {
   display: inline-flex;
   align-items: center;
@@ -118,7 +139,11 @@ section { padding-block: var(--section-pad); }
   border-radius: 2px;
   border: 1px solid var(--gold-500);
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
 
 .btn-gold {
@@ -142,21 +167,14 @@ section { padding-block: var(--section-pad); }
   color: var(--gold-400);
 }
 
-/* Cards */
+/* Cards. No hover state here: most cards aren't clickable, so they
+   shouldn't react to the pointer as if they were. */
 .card {
   background: var(--ink-700);
   border: 1px solid var(--ink-600);
   border-radius: 4px;
-  transition: border-color 0.25s ease, transform 0.25s ease;
 }
 
-.card:hover {
-  border-color: rgba(212, 175, 55, 0.45);
-  transform: translateY(-4px);
-}
-
-/* Utility */
-.text-gold { color: var(--gold-500); }
 
 ::selection {
   background: var(--gold-500);

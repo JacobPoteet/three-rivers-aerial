@@ -1,16 +1,18 @@
 ---
 interface Props {
   size?: number;
+  /** Draw the rivers in on page load (used once, in the nav). */
+  draw?: boolean;
 }
-const { size = 34 } = Astro.props;
+const { size = 34, draw = false } = Astro.props;
 ---
 
-<span class="logo">
+<span class:list={['logo', { draw }]}>
   <svg width={size} height={size} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <!-- Allegheny (from upper-right) and Monongahela (from lower-right) meet at the Point, forming the Ohio flowing out to the left -->
-    <path d="M56 10 C 44 22, 38 27, 30 32" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <path d="M56 54 C 44 42, 38 37, 30 32" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <path d="M30 32 L 6 32" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M56 10 C 44 22, 38 27, 30 32" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round" pathLength="1"/>
+    <path d="M56 54 C 44 42, 38 37, 30 32" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round" pathLength="1"/>
+    <path d="M30 32 L 6 32" stroke="var(--gold-500)" stroke-width="4" fill="none" stroke-linecap="round" pathLength="1"/>
   </svg>
   <span class="logo-text">
     <strong>Three Rivers</strong>
@@ -19,6 +21,26 @@ const { size = 34 } = Astro.props;
 </span>
 
 <style>
+  /* The Allegheny and Monongahela flow in from the right, meet at the
+     Point, and the Ohio carries on to the left. */
+  .logo.draw path {
+    stroke-dasharray: 1;
+    animation: river-draw 0.7s cubic-bezier(0.45, 0, 0.25, 1) 0.3s both;
+  }
+
+  .logo.draw path:nth-of-type(3) {
+    animation-duration: 0.5s;
+    animation-delay: 0.9s;
+  }
+
+  /* Opacity hides the round line cap that would otherwise sit as a dot at
+     the start of each undrawn line. */
+  @keyframes river-draw {
+    from { stroke-dashoffset: 1; opacity: 0; }
+    5% { opacity: 1; }
+    to { stroke-dashoffset: 0; opacity: 1; }
+  }
+
   .logo {
     display: inline-flex;
     align-items: center;

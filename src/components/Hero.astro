@@ -21,7 +21,7 @@
   </div>
   <div class="container hero-inner">
     <p class="kicker">Pittsburgh Aerial Real Estate Media</p>
-    <h1>Pittsburgh real estate,<br />seen from a <span class="text-gold">higher&nbsp;point</span>.</h1>
+    <h1>Pittsburgh real estate,<br />seen from a higher&nbsp;point.</h1>
     <p class="lede">
       Cinematic aerial photography and videography for residential and commercial
       properties across the Greater Pittsburgh area. Listings with aerial media
@@ -125,6 +125,56 @@
     .hero-bg {
       animation: none;
       opacity: 1;
+    }
+  }
+
+  /* The ascent: as the hero scrolls away, the footage pulls back and sinks
+     at a slower rate than the page (reading as distance, like the drone
+     climbing), while the copy lifts off a little faster and fades. Runs on
+     the browser's scroll timeline, so no JS. Unsupported browsers and
+     reduced-motion visitors get the static hero. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hero {
+        view-timeline: --hero block;
+        /* Default inset follows html's scroll-padding (for the fixed nav),
+           which would start the ascent before the visitor has scrolled. */
+        view-timeline-inset: 0px;
+      }
+
+      .hero-video,
+      .hero-inner {
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --hero;
+        /* From the hero's top edge leaving the viewport (scroll 0) to its
+           bottom edge leaving it, regardless of hero height. */
+        animation-range: exit-crossing 0% exit-crossing 100%;
+      }
+
+      .hero-video { animation-name: ascent-footage; }
+      .hero-inner { animation-name: ascent-copy; }
+    }
+  }
+
+  @keyframes ascent-footage {
+    from {
+      transform: translateY(0) scale(1.08);
+      opacity: 0.9;
+    }
+    to {
+      transform: translateY(35%) scale(1);
+      opacity: 0.3;
+    }
+  }
+
+  /* The copy is fully faded by mid-scroll so it never slides up behind
+     the (still transparent) nav links. */
+  @keyframes ascent-copy {
+    50% { opacity: 0; }
+    to {
+      transform: translateY(-18vh);
+      opacity: 0;
     }
   }
 </style>

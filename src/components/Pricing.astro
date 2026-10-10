@@ -1,53 +1,10 @@
 ---
-// Edit prices and inclusions here — each object is one pricing card.
-const tiers = [
-  {
-    name: 'The Mon',
-    price: '$249',
-    salePrice: '$149',
-    tagline: 'Aerial photos that make the listing',
-    features: [
-      '10 edited aerial photos',
-      'Multiple altitudes and angles',
-      'MLS-ready resolution and formats',
-      '72-hour delivery',
-    ],
-    featured: false,
-  },
-  {
-    name: 'The Allegheny',
-    price: '$449',
-    salePrice: '$299',
-    tagline: 'Photos plus a cinematic aerial film',
-    features: [
-      'Everything in The Mon + 5 additional photos',
-      '60–90 second cinematic 4K video',
-      'Licensed music and professional edit',
-      '72-hour delivery',
-    ],
-    featured: true,
-  },
-  {
-    name: 'The Ohio',
-    price: '$699',
-    salePrice: '$599',
-    tagline: 'The full marketing package',
-    features: [
-      'Everything in The Allegheny',
-      '25+ edited aerial photos',
-      'Twilight / golden-hour session',
-      'Neighborhood and amenity flyover',
-      'Lot line overlay graphics',
-      'Priority 48-hour delivery',
-    ],
-    featured: false,
-  },
-];
+// Prices and inclusions live in src/data/packages.ts.
+import { packages as tiers } from '../data/packages';
 ---
 
 <section id="pricing">
   <div class="container">
-    <p class="kicker">Packages</p>
     <h2>Three rivers, three packages</h2>
     <p class="section-intro">
       Straightforward pricing for residential listings. Commercial projects,
@@ -81,13 +38,28 @@ const tiers = [
           <ul>
             {tier.features.map((feature) => <li>{feature}</li>)}
           </ul>
-          <a href="#contact" class={`btn ${tier.featured ? 'btn-gold' : 'btn-outline'}`}>Book This Package</a>
+          <a href="#contact" class={`btn ${tier.featured ? 'btn-gold' : 'btn-outline'}`} data-package={tier.name}>Book This Package</a>
         </article>
         );
       })}
     </div>
   </div>
 </section>
+
+<script>
+  // "Book This Package" jumps to the contact form (via its href) and
+  // pre-selects the chosen package, flashing the field so the change is seen.
+  const select = document.querySelector<HTMLSelectElement>('#contact-form select[name="package"]');
+  document.querySelectorAll<HTMLAnchorElement>('a[data-package]').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (!select || !link.dataset.package) return;
+      select.value = link.dataset.package;
+      select.classList.remove('prefilled');
+      void select.offsetWidth; // restart the flash if it's already running
+      select.classList.add('prefilled');
+    });
+  });
+</script>
 
 <style>
   .tiers {
