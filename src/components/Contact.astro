@@ -30,6 +30,9 @@ const PHONE = site.phone;
     <div class="form-col">
     <form id="contact-form" action={FORM_ACTION} method="POST" class="card">
       <input type="hidden" name="_subject" value="[TRA-FORM] New lead via threeriversaerial.com" />
+      <!-- Honeypot: hidden from people, but spam bots fill it in, and
+           Formspree silently drops any submission where it isn't empty. -->
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none" />
       <div class="row">
         <label>
           Name
