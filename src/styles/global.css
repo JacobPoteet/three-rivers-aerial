@@ -12,13 +12,20 @@
   --gold-500: #d4af37;     /* primary gold */
   --gold-400: #e3c565;     /* hover gold */
   --gold-600: #a8862a;     /* deep gold */
+  --gold-700: #806418;     /* small gold text on cream */
   --cream: #f5f1e6;        /* headings */
   --stone: #b9b4a6;        /* body text */
-  --stone-dim: #7d7a70;    /* muted text */
+  --stone-dim: #7d7a70;    /* muted text, on ink-900 only */
+  --stone-700: #5e5b53;    /* muted text on cream */
+  --graphite: #3a3833;     /* body text on cream */
 
   /* Typography */
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Motion */
+  --ease-draw: cubic-bezier(0.7, 0, 0.2, 1);   /* river strokes */
+  --ease-rise: cubic-bezier(0.16, 1, 0.3, 1);  /* text rising, rules wiping */
 
   /* Layout */
   --container: 1160px;
